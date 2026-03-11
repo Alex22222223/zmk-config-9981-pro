@@ -151,12 +151,9 @@ static void polling_work_handler(struct k_work *work) {
             break;
 
         case 1:
-            /* Layers 1/2/3 usually imply keys were pressed to get there, so we assume valid */
-            /* But if we layer-lock? Then we might want logic.
-               However, usually you hold a key to access layers.
-               If layer is active, backlight_allowed should essentially be true because you pressed
-               a key. */
-
+            /* Layer 1 (SYM层): 10% 常亮 */
+            set_led_brightness(10);
+            break;
             blink_start_high = !rgb_on ? true : false;
             blink_on = blink_start_high;
             /* Allow blink if active */
@@ -169,12 +166,10 @@ static void polling_work_handler(struct k_work *work) {
             k_work_reschedule(&cycle_work, K_MSEC(100));
             break;
 
-        case 3:
-            blink_on = false;
-            set_led_brightness(BRT_BLINK_LOW);
-            k_work_reschedule(&blink_work, K_MSEC(BLINK_INTERVAL_MS / 2));
+          case 3:
+            /* Layer 3 (MEDIA层): 10% 常亮 */
+            set_led_brightness(10);
             break;
-
         default:
             set_led_brightness(0);
             break;
@@ -220,3 +215,4 @@ static int keyboardbacklight_init(void) {
 }
 
 SYS_INIT(keyboardbacklight_init, APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY);
+
