@@ -216,3 +216,4 @@ static int keyboardbacklight_init(void) {
 
 SYS_INIT(keyboardbacklight_init, APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY);
 
+
